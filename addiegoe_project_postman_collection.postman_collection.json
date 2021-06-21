@@ -1,0 +1,1846 @@
+{
+	"info": {
+		"_postman_id": "cc009070-b572-49be-9ced-228fbfdc9664",
+		"name": "addiegoe_project_postman_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user test 1 -get users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user test 2 - post animal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"pm.collectionVariables.set(\"new_u_animal\", responseJson.id);",
+							"",
+							"pm.test(\"Post worked\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Stinky\",\n\"type\": \"skunk\",\n\"age\": 3,\n\"habitat\": \"forest\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user test 3 - get one animal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Animal found\", () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal/{{new_u_animal}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal",
+						"{{new_u_animal}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user test 4 - get all animals",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animals found\", () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user test 5 - edit animal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animal changed\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"habitat\": \"your backyard\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal/{{new_u_animal}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal",
+						"{{new_u_animal}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user test 6 - delete animal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animal deleted\", () => {",
+							"    pm.expect(pm.response.code).to.eql(204);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal/{{new_u_animal}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal",
+						"{{new_u_animal}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user test 7 - part one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//set new variable",
+							"const responseJson = pm.response.json();",
+							"pm.collectionVariables.set(\"new_u_animal2\", responseJson.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt1}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Bubba\",\n\"type\": \"bear\",\n\"age\": 10,\n\"habitat\": \"forest\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user test 7 - part 2 - wrong auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Can't access animal\", () => {",
+							"    pm.expect(pm.response.code).to.eql(403);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal/{{new_u_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal",
+						"{{new_u_animal2}}"
+					]
+				},
+				"description": "Try to get animal with wrong user's jwt"
+			},
+			"response": []
+		},
+		{
+			"name": "user test 8 - wrong auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Can't access animal\", () => {",
+							"    pm.expect(pm.response.code).to.eql(403);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Lulu\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal/{{new_u_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal",
+						"{{new_u_animal2}}"
+					]
+				},
+				"description": "Try to edit animal with wrong jwt"
+			},
+			"response": []
+		},
+		{
+			"name": "user test 9 - wrong auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"can't access animal\", () => {",
+							"    pm.expect(pm.response.code).to.eql(403);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal/{{new_u_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal",
+						"{{new_u_animal2}}"
+					]
+				},
+				"description": "try to delete animal with wrong jwt"
+			},
+			"response": []
+		},
+		{
+			"name": "user test 10 - bad auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Bad jwt\", () => {",
+							"    pm.expect(pm.response.code).to.eql(401);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bad_jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal"
+					]
+				},
+				"description": "bad jwt"
+			},
+			"response": []
+		},
+		{
+			"name": "user test 11 - no auth - 401",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"No jwt\", () => {",
+							"    pm.expect(pm.response.code).to.eql(401);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/user/animal",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"user",
+						"animal"
+					]
+				},
+				"description": "no jwt"
+			},
+			"response": []
+		},
+		{
+			"name": "animal test 1 - post - 201",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//set collection variable",
+							"const responseJson = pm.response.json();",
+							"pm.collectionVariables.set(\"new_animal\", responseJson.id);",
+							"pm.test(\"Animal posted\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"name\": \"Kanga\",\n\"type\": \"kangaroo\",\n\"age\": 10,\n\"habitat\": \"outback\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal"
+					]
+				},
+				"description": "Post an animal without a user associated"
+			},
+			"response": []
+		},
+		{
+			"name": "animal test 2 - get all - 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Got animals\", () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal"
+					]
+				},
+				"description": "Get all animals in collection, no auth"
+			},
+			"response": []
+		},
+		{
+			"name": "animal test 3 - get one",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Got one animal\", () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal test 4 - edit one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Edited one animal\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Hazel\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal}}"
+					]
+				},
+				"description": "edit an animal w/o authentication"
+			},
+			"response": []
+		},
+		{
+			"name": "animal test 5 - 403 forbidden",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Access denied, animal associated with user\", () => {",
+							"    pm.expect(pm.response.code).to.eql(403);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_u_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_u_animal2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal test 6 - 405",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Bad method, can't add zoo with this route\", () => {",
+							"    pm.expect(pm.response.code).to.eql(405);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Bobby\",\n\"zoo\": \"5643280054222848\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal test 7 - delete one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Deleted successfully\", () => {",
+							"    pm.expect(pm.response.code).to.eql(204);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal}}"
+					]
+				},
+				"description": "delete animal not associated with user"
+			},
+			"response": []
+		},
+		{
+			"name": "animal test 8 - 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animal not found\", () => {",
+							"    pm.expect(pm.response.code).to.eql(404);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "zoo test 1 - post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//set collection variable",
+							"const responseJson = pm.response.json();",
+							"pm.collectionVariables.set(\"new_zoo\", responseJson.id);",
+							"pm.test(\"Posted successfully\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Oregon Zoo\",\n\"city\": \"Portland\",\n\"state\": \"OR\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo"
+					]
+				},
+				"description": "post a zoo"
+			},
+			"response": []
+		},
+		{
+			"name": "zoo test 2 - 406",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Not accepted\", () => {",
+							"    pm.expect(pm.response.code).to.eql(406);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "zoo test 3 - get all",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Got all zoos\", () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo"
+					]
+				},
+				"description": "get all zoos"
+			},
+			"response": []
+		},
+		{
+			"name": "zoo test 4 - get one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Got zoo\", () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo}}"
+					]
+				},
+				"description": "get one zoo by id"
+			},
+			"response": []
+		},
+		{
+			"name": "zoo test 5 - edit one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Edited successfully\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Cool Zoo\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo}}"
+					]
+				},
+				"description": "edit a zoo"
+			},
+			"response": []
+		},
+		{
+			"name": "zoo test 6 - delete one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Deleted successfully\", () => {",
+							"    pm.expect(pm.response.code).to.eql(204);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 1 part 1 - add animal to zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//set new collection variable",
+							"const responseJson = pm.response.json();",
+							"pm.collectionVariables.set(\"new_animal2\", responseJson.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Bilbo\",\n\"type\": \"goat\",\n\"age\": 10,\n\"habitat\": \"mountains\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 1 part 2 - add animal to zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"pm.collectionVariables.set(\"new_zoo2\", responseJson.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Boston Zoo\",\n\"city\": \"Boston\",\n\"state\": \"MA\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 1 part 3- add animal to zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animal successfully added to zoo\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "hhttps://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo2}}/{{new_animal2}}",
+					"protocol": "hhttps",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo2}}",
+						"{{new_animal2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 1 part 4 -add animal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"const animal = pm.collectionVariables.get(\"new_animal2\");",
+							"pm.test(\"animal in zoo\", function () {",
+							"    pm.expect(responseJson.animals).to.include(animal);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 1 part 5 - add animal from zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"const zoo = pm.collectionVariables.get(\"new_zoo2\");",
+							"pm.test(\"animal in zoo\", function () {",
+							"    pm.expect(responseJson.zoo).to.eql(zoo);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 2 part 1- remove animal from zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animal successfully removed from zoo\", () => {",
+							"    pm.expect(pm.response.code).to.eql(204);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo2}}/{{new_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo2}}",
+						"{{new_animal2}}"
+					]
+				},
+				"description": "remove animal from zoo's array"
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 2 part 2- remove animal from zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"pm.test(\"animal not in zoo\", function () {",
+							"    pm.expect(responseJson.animals).to.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 2 part 3 - delete animal from zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"pm.test(\"animal not in zoo\", function () {",
+							"    pm.expect(responseJson.zoo).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 3 part 1 - delete animal that is in zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//set new collection variable",
+							"const responseJson = pm.response.json();",
+							"pm.collectionVariables.set(\"new_animal3\", responseJson.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Sparky\",\n\"type\": \"iguana\",\n\"age\": 3,\n\"habitat\": \"trees\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 3 part 2 - delete animal that is in zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animal successfully added to zoo\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo2}}/{{new_animal3}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo2}}",
+						"{{new_animal3}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 3 part 3 - delete animal that is in zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animal successfully deleted\", () => {",
+							"    pm.expect(pm.response.code).to.eql(204);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal3}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal3}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 3 part 4 - delete animal that is in zoo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"pm.test(\"animal not in zoo\", function () {",
+							"    pm.expect(responseJson.animals).to.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 4 part 1 - delete zoo with animal in it",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Animal successfully added to zoo\", () => {",
+							"    pm.expect(pm.response.code).to.eql(201);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo2}}/{{new_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo2}}",
+						"{{new_animal2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 4 part 2 - delete zoo with animal in it",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Zoo successfully deleted\", () => {",
+							"    pm.expect(pm.response.code).to.eql(204);",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/zoo/{{new_zoo2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"zoo",
+						"{{new_zoo2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "animal/zoo test 4 part 3 - delete zoo with animal in it",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();",
+							"pm.test(\"zoo was deleted from animal\", function () {",
+							"    pm.expect(responseJson.zoo).to.eql(null);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://quixotic-strand-309814.wl.r.appspot.com/animal/{{new_animal2}}",
+					"protocol": "https",
+					"host": [
+						"quixotic-strand-309814",
+						"wl",
+						"r",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"animal",
+						"{{new_animal2}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "new_u_animal",
+			"value": ""
+		},
+		{
+			"key": "new_u_animal2",
+			"value": ""
+		},
+		{
+			"key": "new_animal",
+			"value": ""
+		},
+		{
+			"key": "new_zoo",
+			"value": ""
+		},
+		{
+			"key": "new_zoo2",
+			"value": ""
+		},
+		{
+			"key": "new_animal2",
+			"value": ""
+		},
+		{
+			"key": "new_animal3",
+			"value": ""
+		},
+		{
+			"key": "bad_jwt",
+			"value": ""
+		}
+	]
+}
